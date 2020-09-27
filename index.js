@@ -42,8 +42,8 @@ function start() {
             message: "MAIN MENU",
             choices: [
                 "View all employees",
-                "View all employees by role",
-                "View all employees by department",
+                "View all roles",
+                "View all departments",
                 "View all employees by manager",
                 "Add employee",
                 "Add role",
@@ -61,12 +61,12 @@ function start() {
                     viewAllEmp();
                     break;
 
-                case "View all employees by department":
-                    viewAllEmpByDept();
+                case "View all department":
+                    viewDept();
                     break;
 
-                case "View all employees by role":
-                    viewAllEmpByRole();
+                case "View all role":
+                    viewRole();
                     break;
 
                 case "Add employee":
@@ -170,7 +170,7 @@ function addEmp() {
 }
 
     //Read:
-function viewAllEmpByDept() {
+function viewDept() {
     // prints departments to screen
     connection.query(
         'query',
@@ -181,7 +181,7 @@ function viewAllEmpByDept() {
         });
 };
 
-function viewAllEmpByRole() {
+function viewRole() {
     // prints roles to screen
     connection.query(
         'query',
