@@ -32,6 +32,7 @@ connection.connect(function (err) {
     start();
 });
 
+
 //create the start function:
 function start() {
     inquirer
@@ -75,32 +76,132 @@ function start() {
                 case "Add department":
                     addDept();
                     break;
+
                 case "Add role":
                     addRole();
                     break;
+
                 case "Update employee role":
                     updateEmpRole();
                     break;
+
                 case "Update employee manager":
                     updateEmpMngr();
                     break;
+
                 case "View all employees by manager":
                     viewAllEmpByMngr();
                     break;
+
                 case "Delete employee":
                     deleteEmp();
                     break;
+
                 case "View department budgets":
                     viewDeptBudget();
                     break;
+
                 case "Delete role":
                     deleteRole();
                     break;
+
                 case "Delete department":
                     deleteDept();
                     break;
             }
         });
 }
+
+
+
+//CRUD:
+
+//Create:
+    //Employee:
+function addEmp() {
+    inquirer.prompt([
+        {
+            // Prompt user of their first name
+            name: "firstName",
+            type: "input",
+            message: "First name: ",
+            // Validate field is not blank
+            validate: function (input) {
+                if (input === "") {
+                    console.log("**FIELD REQUIRED**");
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+        },
+
+        {
+            // Prompt user of their last name
+            name: "lastName",
+            type: "input",
+            message: "Lastname name: ",
+            // Validate field is not blank
+            validate: function (input) {
+                if (input === "") {
+                    console.log("**FIELD REQUIRED**");
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+        }]).then(function (answer) {
+            // Add employee
+            connection.query(
+                'INSERT INTO employee SET ?', {
+                firstName: answer.first_name,
+                lastName: answer.last_name
+            },
+                (error, data) => {
+                    if (error) throw error;
+
+                    // Confirm employee has been added
+                    console.log(`\n EMPLOYEE ${answer.firstName} ${answer.lastName} ADDED...\n `);
+                    start();
+                })
+        })
+}
+
+    //Read:
+function viewAllEmpByDept() {
+    // prints departments to screen
+    connection.query(
+        'query',
+        [queryParameters],
+        function (error, data) {
+            if (error) throw error;
+            // logic goes here
+        });
+};
+
+function viewAllEmpByRole() {
+    // prints roles to screen
+    connection.query(
+        'query',
+        [queryParameters],
+        function (error, data) {
+            if (error) throw error;
+            // logic goes here
+        });
+};
+
+function viewAllEmp(); {
+    // prints current roster to screen use console.table
+    connection.query(
+        'SELECT * FROM employees',
+        [queryParameters],
+        function (error, data) {
+            if (error) throw error;
+            console.table(employees) // display table??? 
+        });
+};
+
 
 
